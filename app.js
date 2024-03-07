@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const cartElement = document.querySelector('.cart');
     let cartCount = 0;
     let orderDetails = [];
+    let cartItems = {};
 
     // Get all the Add to Cart buttons
     const addToCartButtons = document.querySelectorAll('.product button');
@@ -16,6 +17,17 @@ document.addEventListener("DOMContentLoaded", function() {
             const productPrice = parseFloat(product.querySelector('p').textContent.split('Rs.')[1]);
             orderDetails.push({ name: productName, price: productPrice });
             updateCartCount(cartCount);
+            if (cartItems[productName]) {
+                cartItems[productName].quantity++;
+            } else {
+                cartItems[productName] = {
+                    price: productPrice,
+                    quantity: 1
+                };
+            }
+            console.log(`${productName} - Rs.${productPrice.toFixed(2)}`);
+            updateCartCount(cartCount);
+            
         });
     });
 
